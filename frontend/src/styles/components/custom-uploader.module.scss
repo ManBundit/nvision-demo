@@ -1,0 +1,34 @@
+.customUploader {
+  position: relative;
+  width: 100%;
+  &.uploading {
+    .uploadArea{
+      background: red;
+    }
+  }
+  &.dragOver {
+    .uploadArea {
+      background: blue;
+    }
+  }
+  .uploadArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px dashed grey;
+    width: 100%;
+    padding: 40px;    
+  }
+  .text {
+    text-align: center;
+  }
+  input[type="file"] {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
