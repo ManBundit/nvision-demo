@@ -2,7 +2,7 @@
 Add API key in config/.env then run
 ```docker-compose --env-file ./config/.env up```
 
-navigate to http://localhost:4000 or edit port on `docker-compose.yml`
+navigate to http://localhost:4000 or edit port on `docker-compose.yml
 
 # Regular
 on frontend directory 
