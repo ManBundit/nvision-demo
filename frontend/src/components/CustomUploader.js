@@ -67,8 +67,15 @@ export default function CustomUploader({onUpload, onSuccess, onFailure}) {
         onDrop={handleDrag}
         onClick={handleClick}
       >
-        <span className={styles.text}>
-          { !isDragOver ? 'Drag any image file here or click to upload' : 'Drop file here'}
+        <span className={styles.text}>          
+          { isUploading 
+            ? 'Uploading...' 
+            : (
+              isDragOver 
+              ? 'Drop file here' 
+              : 'Drag any image file here or click to upload'
+              )
+          }
         </span>
       </div>
       <input ref={input} multiple accept={allowedFileTypes.join(',')} type="file" onChange={handleUpload}/>      

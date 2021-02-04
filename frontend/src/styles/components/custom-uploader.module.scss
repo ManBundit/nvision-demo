@@ -3,15 +3,19 @@
   width: 100%;
   &.uploading {
     .uploadArea{
-      background: red;
+      background: grey;
+      pointer-events: none;
     }
   }
   &.dragOver {
     .uploadArea {
-      background: blue;
+      color: #00c3ff;
+      border-color: #00c3ff;
+      background: #eeeeee;
     }
   }
   .uploadArea {
+    min-height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -22,6 +22,7 @@ router.post('/object-detection', (req, res) => {
       })
     })
     .catch((error) => {      
+      console.log(error)
       const status = error?.response?.status || 500
       const message = error?.response?.statusText || 'Internal Server Error'      
       res.status(status).send({
