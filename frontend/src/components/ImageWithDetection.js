@@ -30,9 +30,9 @@ export default function ImageWithDetection({ detectedObjects = [], name, data, t
         context.textBaseline = 'top'
         context.fillStyle = 'red'
         const { width: textWidth } = context.measureText(label)               
-        context.fillRect(left - borderWidth, top, textWidth + borderWidth, -fontSize);                
+        context.fillRect(Math.max(left - borderWidth, 0), Math.max(top - parseInt(fontSize, 10), 0), textWidth + borderWidth, fontSize);                
         context.fillStyle = 'white'
-        context.fillText(label, left, top - parseInt(fontSize, 10))     
+        context.fillText(label, Math.max(left, 0), Math.max(top - parseInt(fontSize, 10), 0))     
       })
       setImage(canvas.toDataURL(type))
     };
