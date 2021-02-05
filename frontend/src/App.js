@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAppContext } from 'context/app-context'
 import CustomTab from 'components/CustomTab';
 import CustomUploader from 'components/CustomUploader'
@@ -7,9 +7,14 @@ import ImageWithDetection from 'components/ImageWithDetection'
 import { postObjectDetection } from 'service/nvision/object-detection.api'
 
 function App() {
-  const { isLoading, setIsLoading } = useAppContext() 
+  const { isLoading, setIsLoading } = useAppContext()
   const [tab, setTab] = useState(1)
   const [displayImages, setDisplayImages] = useState([])
+  const [error, setError] = useState({
+    show: false,
+    message: 'Error, Something went wrong'
+  })  
+  const errorTimeout = useRef()
   const tabs = [
     {
       name: 'Upload Image',
@@ -20,6 +25,17 @@ function App() {
       value: 2
     }
   ]
+  useEffect(() => {
+    if (error.show) {
+      clearTimeout(errorTimeout.current)
+      errorTimeout.current = setTimeout(() => {
+        setError({
+          ...error,
+          show: false
+        })
+      }, 3000)
+    }
+  }, [error]);
   const predictImages = async (images = []) => {
     setIsLoading(true)
     let imagesWithDetectedObjects = []
@@ -28,7 +44,11 @@ function App() {
         const { data: { data } } = await postObjectDetection({ rawData: images[i].data.split(',')[1] })
         images[i].detectedObjects = data.detectedObjects        
         imagesWithDetectedObjects.push(images[i])
-      } catch(error) {        
+      } catch(error) {     
+        setError({
+          message: `Error, ${error.message || 'Something went wrong'}`,
+          show: true
+        })
         continue
       }
     }
@@ -50,6 +70,9 @@ function App() {
   }
   return (
     <div className={`app-content ${isLoading ? 'loading' : ''}`}>
+      <div className={`error ${error.show ? 'show' : ''}`}>
+        {error.message}
+      </div>
       <div className="wrapper">
         <h1>Object Detection</h1>
         <div className="tab-width">
