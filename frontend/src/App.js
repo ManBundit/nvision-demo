@@ -7,7 +7,7 @@ import ImageWithDetection from 'components/ImageWithDetection'
 import { postObjectDetection } from 'service/nvision/object-detection.api'
 
 function App() {
-  const { setIsLoading } = useAppContext() 
+  const { isLoading, setIsLoading } = useAppContext() 
   const [tab, setTab] = useState(1)
   const [displayImages, setDisplayImages] = useState([])
   const tabs = [
@@ -49,18 +49,20 @@ function App() {
     }
   }
   return (
-    <div className="wrapper">
-      <h1>Object Detection</h1>
-      <div className="tab-width">
-        <CustomTab tabs={tabs} onTabChange={setTab} activeTab={tab} />
-      </div>
-        {renderTabContent(tab)}
-      <div className="image-list">
-        {displayImages.map((image, index) => 
-          <div className="wrap-img" key={index}>
-            <ImageWithDetection {...image} />
-          </div>
-        )}
+    <div className={`app-content ${isLoading ? 'loading' : ''}`}>
+      <div className="wrapper">
+        <h1>Object Detection</h1>
+        <div className="tab-width">
+          <CustomTab tabs={tabs} onTabChange={setTab} activeTab={tab} />
+        </div>
+          {renderTabContent(tab)}
+        <div className="image-list">
+          {displayImages.map((image, index) => 
+            <div className="wrap-img" key={index}>
+              <ImageWithDetection {...image} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
